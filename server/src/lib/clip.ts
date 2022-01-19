@@ -140,7 +140,7 @@ export default class Clip {
       return;
     }
 
-    const glob = clip.path.replace('.mp3', '');
+    const glob = clip.path.replace('.wav', '');
 
     await this.model.db.saveVote(id, client_id, isValid);
     await Awards.checkProgress(client_id, { id: clip.locale_id });
@@ -212,7 +212,7 @@ export default class Clip {
     // Where is our audio clip going to be located?
     const folder = client_id + '/';
     const filePrefix = sentenceId;
-    const clipFileName = folder + filePrefix + '.mp3';
+    const clipFileName = folder + filePrefix + '.wav';
     const metadata = `${clipFileName} (${size} bytes, ${format}) from ${source}`;
 
     if (await this.model.db.clipExists(client_id, sentenceId)) {
@@ -248,10 +248,10 @@ export default class Clip {
       }
 
       const audioOutput = new Transcoder(audioInput)
-        .audioCodec('mp3')
-        .format('mp3')
+        .audioCodec('pcm_s16le')
+        .format('wav')
         .channels(1)
-        .sampleRate(32000)
+        .sampleRate(44100)
         .on('error', (error: string) => {
           this.clipSaveError(
             headers,
