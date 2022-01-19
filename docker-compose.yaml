@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   db:
     image: mysql:5.7.28
     networks:
@@ -12,13 +13,16 @@ services:
       - MYSQL_PASSWORD=voicecommons
       - MYSQL_ROOT_PASSWORD=voicewebroot
     command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+
   redis:
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
     networks:
       - voice-web
+
   s3proxy:
+    # https://github.com/gaul/s3proxy
     image: andrewgaul/s3proxy
     container_name: s3proxy
     ports:
@@ -27,6 +31,7 @@ services:
       - voice-web
     environment:
       - S3PROXY_AUTHORIZATION=none
+
   web:
     build:
       context: .
@@ -42,8 +47,9 @@ services:
     networks:
       - voice-web
     ports:
-      - 9000:9000
+      - 8070:9000
     command: bash -c "/code/docker/wait-for-it.sh s3proxy:80 -- /code/docker/prepare_s3.sh && yarn && yarn start"
+
 
 networks:
   voice-web:
