@@ -1,3 +1,5 @@
+# CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
+
 version: '3'
 services:
 
@@ -52,6 +54,7 @@ services:
     ports:
       - 8070:9000
     command: bash -c "/code/docker/wait-for-it.sh s3proxy:80 -- /code/docker/prepare_s3.sh && yarn && yarn start"
+    user: ${CURRENT_UID}
 
 
 networks:
