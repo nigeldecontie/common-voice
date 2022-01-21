@@ -2,6 +2,7 @@ version: '3'
 services:
 
   db:
+    container_name: db
     image: mysql:5.7.28
     networks:
       - voice-web
@@ -15,6 +16,7 @@ services:
     command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
   redis:
+    container_name: redis
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
@@ -22,6 +24,7 @@ services:
       - voice-web
 
   s3proxy:
+    container_name: s3proxy
     # https://github.com/gaul/s3proxy
     image: andrewgaul/s3proxy
     container_name: s3proxy
@@ -33,10 +36,10 @@ services:
       - S3PROXY_AUTHORIZATION=none
 
   web:
+    container_name: web
     build:
       context: .
       dockerfile: docker/Dockerfile
-    container_name: web
     links:
       - db
       - redis
