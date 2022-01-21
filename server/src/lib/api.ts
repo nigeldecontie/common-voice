@@ -384,8 +384,7 @@ export default class API {
             Body: transcoder
                .audioCodec('pcm_s16le')
                .sampleRate(44100)
-               .channels(2)
-               .audioBitrate(128 * 1000)
+               .channels(1)
                .format('wav')
                .stream(),
           })
