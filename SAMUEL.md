@@ -1,5 +1,9 @@
-# S3proxy
+# Common Voice
 
+## S3proxy
+
+What is stored in our S3 proxy.
+This is similar to `ls`.
 ```bash
 curl http://127.0.0.1:9001/common-voice-clips \
 | xmllint --format -
@@ -38,6 +42,7 @@ curl http://127.0.0.1:9001/common-voice-clips \
 ```
 
 
+Retrieve a file and check what file type it is.
 ```bash
 curl http://127.0.0.1:9001/common-voice-clips/18f74bcf-210c-43e6-b443-78248399c0ce/00003ee1748579223ce314d00265913ba19835024b6e536f0d425230da27a629.mp3 \
 | file -
