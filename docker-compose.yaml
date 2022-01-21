@@ -2,6 +2,7 @@ version: '3'
 services:
 
   db:
+    container_name: db
     image: mysql:5.7.28
     networks:
       - voice-web
@@ -17,6 +18,7 @@ services:
       - 3306:3306
 
   redis:
+    container_name: redis
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
@@ -24,6 +26,7 @@ services:
       - voice-web
 
   s3proxy:
+    container_name: s3proxy
     # https://github.com/gaul/s3proxy
     image: andrewgaul/s3proxy
     container_name: s3proxy
@@ -35,10 +38,10 @@ services:
       - S3PROXY_AUTHORIZATION=none
 
   web:
+    container_name: web
     build:
       context: .
       dockerfile: docker/Dockerfile
-    container_name: web
     links:
       - db
       - redis
