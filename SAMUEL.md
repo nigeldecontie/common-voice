@@ -1,5 +1,13 @@
 # Common Voice
 
+## Links
+* [Common Voice - Github](https://github.com/common-voice/common-voice) Mozilla Common Voice, a platform for collecting speech donations in order to create public domain datasets for training voice recognition-related tools.
+* [Matrix Chat](https://chat.mozilla.org/#/room/#common-voice:mozilla.org)
+* [Discourse](https://discourse.mozilla.org/c/voice/239)
+* [Auth0](https://auth0.com/)
+* [stream-transcoder.js](https://www.npmjs.com/package/stream-transcoder) Flexible media transcoding using FFmpeg. Stream media in and out - converting it on the fly.
+
+
 ## Tasks
 
 Hey Samuel, I mentioned I would pass on the info about what we’re looking for.
