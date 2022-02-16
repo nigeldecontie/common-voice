@@ -356,16 +356,17 @@ export default class API {
         transcoder = new Transcoder(request);
       }
 
+      const config = getConfig();
       await Promise.all([
         this.s3
           .upload({
             Bucket: getConfig().CLIP_BUCKET_NAME,
             Key: clipFileName,
             Body: transcoder
-               .audioCodec('pcm_s16le')
-               .sampleRate(44100)
+               .audioCodec(config.TRANSCODE.AUDIO_CODEC)
+               .sampleRate(config.TRANSCODE.SAMPLE_RATE)
                .channels(1)
-               .format('wav')
+               .format(config.TRANSCODE.FORMAT)
                .stream(),
           })
           .promise(),
