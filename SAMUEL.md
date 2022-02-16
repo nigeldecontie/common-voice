@@ -28,8 +28,17 @@ Namely:
 Let me know if you have any questions though!
 
 
-## S3proxy
+## Auth0
+Like it or not, you need a [Auth0](https://auth0.com/) account to get Common Voice to work.
+Add the following lines to `.env-local-docker` which is locate at the root of the git repository.
+```
+CV_AUTH0_DOMAIN="dev-24cisdir.us.auth0.com"
+CV_AUTH0_CLIENT_ID="<YOUR_ID>"
+CV_AUTH0_CLIENT_SECRET="<YOU_HAVE_A_SECRET>"
+```
 
+
+## S3proxy
 What is stored in our S3 proxy.
 This is similar to `ls`.
 ```bash
