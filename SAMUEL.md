@@ -156,3 +156,13 @@ curl http://127.0.0.1:9001/common-voice-clips/18f74bcf-210c-43e6-b443-78248399c0
 ```
 /dev/stdin: Audio file with ID3 version 2.4.0, contains:MPEG ADTS, layer III, v1, 48 kbps, 32 kHz, Monaural
 ```
+
+## Why `You're on the staging server.`
+Originating from `web/src/components/layout/layout.tsx`
+It uses `web/src/utility.ts:isProduction()` which simply check if the `window.location.origin === URLS.HTTP_ROOT` where `URLS.HTTP_ROOT` is `https://commonvoice.mozilla.org`.
+
+
+## File Changed so Far.
+* `server/src/lib/api.ts`
+* `server/src/lib/bucket.ts`
+* `server/src/lib/clip.ts`
