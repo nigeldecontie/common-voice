@@ -24,6 +24,9 @@ Namely:
 - Common Voice currently collects audio in a lossy format (mp3), we need to change this to lossless
   16bit, 48k sample rate, lossless wav files
 - Perhaps add some server-side scripting to automate signal processing/de-noising/backup
+- Is it set up so that auth0 let’s us define a list of email address or something that are whitelisted for signing up?
+    The recordings should also only be accessible to pre-defined sets of users.
+    Do you have a sense of whether it will be easier to password protect the entire site or whether we could have tiers of access for particular recordings?
 
 Let me know if you have any questions though!
 
