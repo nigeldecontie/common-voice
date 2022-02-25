@@ -46,17 +46,19 @@ def test(
         print(r.text)
 
 
+
 def synchronize(
         webdav_hostname: str,
         webdav_login: str,
         webdav_password: str,
+        s3proxy_ip: str = "s3proxy",
         ):
     """
     Synchronize the audio clips from S3Proxy to NRC's nextcloud.
     """
-    s3_url = "http://s3proxy:9001/common-voice-clips"
+    s3_url = f"http://{s3proxy_ip}:9001/common-voice-clips"
     options = {
-            'webdav_hostname': webdav_hostname,
+            'webdav_hostname': f"https://{webdav_hostname}/remote.php/dav/files/{webdav_login}/",
             'webdav_login':    webdav_login,
             'webdav_password': webdav_password,
             }
@@ -67,29 +69,42 @@ def synchronize(
     #print(s3)
 
     # What is on our backup?
-    nextcloud = {
-            Path(item["path"]).name: item
-            for item in nextcloud_client.list("CommonVoice", get_info=True)
-            }
-    for f in tqdm(s3.ListBucketResult.Contents[1:]):
-        name = Path(f.Key.cdata).name
-        #print(name)
-        #print(f.Size.cdata)
-        if name not in nextcloud.keys():
-            #print("Uploading", name)
-            with tempfile.NamedTemporaryFile() as temp:
-                r = requests.get(f"{s3_url}/{f.Key.cdata}")
-                # open('facebook.ico', 'wb').write(r.content)
-                temp.write(r.content)
-                nextcloud_client.upload_sync(
-                        local_path=temp.name,
-                        remote_path=f"CommonVoice/{name}")
+    def recursive_list(root: str = "CommonVoice"):
+        """
+        """
+        directories = nextcloud_client.list(root, get_info=True)
+        directories = filter(lambda d: d["isdir"], directories)
+        for directory in directories:
+            path = Path(directory["path"])
+            # /remote.php/dav/files/2c523d8d-449f-4176-bb05-SSSSSSSSSSSS/CommonVoice/
+            path = Path('/'.join(path.parts[5:]))
+            items = nextcloud_client.list(str(path), get_info=True)
+            items = filter(lambda d: not d["isdir"], items)
+            for item in items:
+                path = Path(item["path"])
+                path = Path('/'.join(path.parts[6:]))
+                yield (str(path), item)
+
+    nextcloud = { name for name, _ in recursive_list() }
+
+    missing_recordings = {
+            f.Key.cdata for f in s3.ListBucketResult.Contents[1:]
+            }.difference(nextcloud)
+    for name in tqdm(missing_recordings, desc="Sync S3 => nextcloud", unit="Items"):
+        with tempfile.NamedTemporaryFile() as temp:
+            r = requests.get(f"{s3_url}/{name}")
+            temp.write(r.content)
+            nextcloud_client.mkdir("CommonVoice/" + str(Path(name).parent))
+            nextcloud_client.upload_sync(
+                    local_path=temp.name,
+                    remote_path=f"CommonVoice/{name}",
+                    )
 
 
 
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage pgm hostname login password")
+    if not ( 4<= len(sys.argv) <= 5):
+        print("Usage pgm hostname login password [s3proxy/ip]")
     synchronize(*sys.argv[1:])
