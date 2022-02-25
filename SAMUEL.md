@@ -350,6 +350,41 @@ We need to set a minimum of environment variables.
 ```
 
 
+## nextcloud
+[WEBDAV WITH CURL](https://code.blogs.iiidefix.net/posts/webdav-with-curl/)
+
+[list files/folders in owncloud with php curl](https://stackoverflow.com/a/26676902)
+```
+curl -X PROPFIND -u user:password "http://yourserver.com/owncloud/remote.php/webdav/"
+```
+* PROPFIND = get the list of files/folders
+* MKCOL = create folder
+* DELETE = delete file/folder
+* MOVE = move or rename a file or folder
+* PUT = upload file
+* GET = download file
+
+webdav.list_files
+```
+<?xml version="1.0"?>
+<a:propfind xmlns:a="DAV:">
+<a:prop><a:resourcetype/></a:prop>
+</a:propfind>
+```
+
+Note that the order of the following command is crutial, or so it seems.
+```bash
+curl \
+  -u 2c523d8d-449f-4176-bb05-SSSSSSSSSSSS:cPmzY-ZZZZZ-PD8dd-SSSSS-2DC3F \
+  -i \
+  -X PROPFIND \
+  https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/2c523d8d-449f-4176-bb05-SSSSSSSSSSSS/CommonVoice/ \
+  --upload-file - \
+  -H "Depth: 1" \
+  < webdav.list_files
+```
+
+
 ## File Changed so Far.
 * `server/src/lib/api.ts` `saveAvatarClip()` which I don't think I should've change because it's probably not related to the recordings.
 * `server/src/lib/bucket.ts` `getRandomClips()`
