@@ -1,5 +1,4 @@
 # CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
-# [Running cron jobs in a Docker Alpine container](https://devopsheaven.com/cron/docker/alpine/linux/2017/10/30/run-cron-docker-alpine.html)
 
 version: '3'
 services:
