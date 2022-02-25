@@ -9,7 +9,6 @@ services:
     image: mysql:5.7.28
     networks:
       - voice-web
-    container_name: db
     restart: unless-stopped
     environment:
       - MYSQL_DATABASE=voiceweb
@@ -23,7 +22,6 @@ services:
   redis:
     container_name: redis
     image: redis:alpine
-    container_name: redis
     restart: unless-stopped
     networks:
       - voice-web
@@ -32,7 +30,6 @@ services:
     container_name: s3proxy
     # https://github.com/gaul/s3proxy
     image: andrewgaul/s3proxy
-    container_name: s3proxy
     ports:
       - 9001:80
     networks:
