@@ -1,4 +1,5 @@
 # CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
+# [Running cron jobs in a Docker Alpine container](https://devopsheaven.com/cron/docker/alpine/linux/2017/10/30/run-cron-docker-alpine.html)
 
 version: '3'
 services:
@@ -55,6 +56,22 @@ services:
       - 8070:9000
     command: bash -c "/code/docker/wait-for-it.sh s3proxy:80 -- /code/docker/prepare_s3.sh && yarn && yarn start"
     user: ${CURRENT_UID}
+
+  tasks:
+    container_name: tasks
+    build:
+      context: ./docker/tasks/
+      dockerfile: Dockerfile
+    depends_on:
+      - s3proxy
+    networks:
+      - voice-web
+    command: crond -f -l 8
+    env_file:
+      - .env-tasks
+    volumes:
+      - ./docker/tasks/cron_tasks_folder/15min:/etc/periodic/15min/:ro
+      - ./docker/tasks/cron_tasks_folder/hourly:/etc/periodic/hourly/:ro
 
 
 networks:
