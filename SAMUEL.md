@@ -351,6 +351,6 @@ We need to set a minimum of environment variables.
 
 
 ## File Changed so Far.
-* `server/src/lib/api.ts`
-* `server/src/lib/bucket.ts`
+* `server/src/lib/api.ts` `saveAvatarClip()` which I don't think I should've change because it's probably not related to the recordings.
+* `server/src/lib/bucket.ts` `getRandomClips()`
 * `server/src/lib/clip.ts`
