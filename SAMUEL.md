@@ -95,6 +95,7 @@ function (user, context, callback) {
 ## Languages
 Can we limit the available languages?
 `locales/all.json` controls the available languages in the UI's drop down box.
+It looks like the UI's language and the utterances' language are the same meaning that if you select English, you get the UI in English and you also get the utterances in English.
 
 ### How to Add a New Language
 Since we haven't found a wait to have the UI in one language and the utterances in another language, we've decided to add a new language code for the utterances and copy the localizations of English to that new language.
