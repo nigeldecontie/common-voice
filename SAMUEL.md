@@ -181,6 +181,41 @@ docker container exec -it web ffmpeg -formats
 ```
 
 
+## S3 File Name
+`server/src/lib/clip.ts`:`saveClip()`
+Saving the audio content on S3.
+```js
+   const { client_id, headers } = request;
+   const sentenceId = headers.sentence_id as string;
+
+   const folder = client_id + '/';
+   const filePrefix = sentenceId;
+   const clipFileName = folder + filePrefix + '.' + config.TRANSCODE.FORMAT;
+
+   await this.s3
+     .upload({
+       Bucket: config.CLIP_BUCKET_NAME,
+       Key: clipFileName,
+       Body: audioOutput,
+     })
+     .promise();
+```
+
+
+I think utterances are identified by a `client_id + sentenceId`.
+The recording are saved in a bucket and there metadata in a database.
+`this.model.db.clipExists(client_id, sentenceId)`
+```js
+    await this.model.saveClip({
+      client_id: client_id,
+      localeId: sentence.locale_id,
+      original_sentence_id: sentenceId,
+      path: clipFileName,
+      sentence: sentence.text,
+    });
+```
+
+
 ## S3proxy
 What is stored in our S3 proxy.
 This is similar to `ls`.
