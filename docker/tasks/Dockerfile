@@ -11,6 +11,6 @@ RUN python \
         untangle \
         webdavclient3
 
-COPY synchronize2webdav.py /
+COPY synchronize2webdav.py /usr/local/bin
 
 CMD ["crond", "-f", "-l", "8"]
