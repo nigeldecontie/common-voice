@@ -210,7 +210,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             </div>
           </header>
         </div>
-        <NonProductionBanner />
+        {false && <NonProductionBanner />}
         <Content location={location} />
         <Footer />
         <div
