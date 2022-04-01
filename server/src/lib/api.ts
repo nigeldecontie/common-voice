@@ -329,7 +329,7 @@ export default class API {
     const { client_id, headers, user } = request;
     console.log(`VOICE_AVATAR: saveAvatarClip() called, ${client_id}`);
     const folder = client_id;
-    const clipFileName = folder + '.wav';
+    const clipFileName = folder + '.mp3';
     try {
       // If upload was base64, make sure we decode it first.
       let transcoder;
@@ -356,18 +356,12 @@ export default class API {
         transcoder = new Transcoder(request);
       }
 
-      const config = getConfig();
       await Promise.all([
         this.s3
           .upload({
             Bucket: getConfig().CLIP_BUCKET_NAME,
             Key: clipFileName,
-            Body: transcoder
-               .audioCodec(config.TRANSCODE.AUDIO_CODEC)
-               .sampleRate(config.TRANSCODE.SAMPLE_RATE)
-               .channels(1)
-               .format(config.TRANSCODE.FORMAT)
-               .stream(),
+            Body: transcoder.audioCodec('mp3').format('mp3').stream(),
           })
           .promise(),
       ]);
