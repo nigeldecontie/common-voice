@@ -1,12 +1,15 @@
 #!/usr/bin/env  python3
 # vim:nowrap:
 
-#curl http://127.0.0.1:9001/common-voice-clips | xmllint --format - | less
+# curl http://127.0.0.1:9001/common-voice-clips | xmllint --format - | less
+
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 import requests
 import sys
 import tempfile
-import untangle
+import untangle   # untangle parses an XML document and returns a Python object which makes it easy to access the data you want.
 
 from pathlib import Path
 from tqdm import tqdm
@@ -51,7 +54,8 @@ def synchronize(
         webdav_hostname: str,
         webdav_login: str,
         webdav_password: str,
-        s3proxy_ip: str = "s3proxy",
+        #s3proxy_ip: str = "s3proxy",
+        s3proxy_ip: str = "127.0.0.1",
         ):
     """
     Synchronize the audio clips from S3Proxy to NRC's nextcloud.
@@ -62,11 +66,17 @@ def synchronize(
             'webdav_login':    webdav_login,
             'webdav_password': webdav_password,
             }
+    logging.info(f"S3: {s3_url}")
+    logging.info(f"NextCloud: {webdav_hostname}")
+
     nextcloud_client = Client(options)
 
     # What is on the server?
     s3 = untangle.parse(s3_url)
     #print(s3)
+    if not hasattr(s3.ListBucketResult, "Contents"):
+        logging.info("S3 is empty")
+        sys.exit()
 
     # What is on our backup?
     def recursive_list(root: str = "CommonVoice"):
