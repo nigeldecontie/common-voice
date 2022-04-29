@@ -49,6 +49,11 @@ export type CommonVoiceConfig = {
   BENCHMARK_LIVE: boolean;
   DEBUG: boolean;
   FLAG_BUFFER_STREAM_ENABLED: boolean;
+  TRANSCODE: {
+     AUDIO_CODEC: string;
+     FORMAT: string;
+     SAMPLE_RATE: number;
+  };
 };
 
 const castDefault = (value: string): any => value;
@@ -104,6 +109,11 @@ const BASE_CONFIG: CommonVoiceConfig = {
     false,
     castBoolean
   ),
+  TRANSCODE: {
+     AUDIO_CODEC: configEntry('CV_TRANSCODE_CODEC', 'mp3'),
+     FORMAT: configEntry('CV_TRANSCODE_FORMAT', 'mp3'),
+     SAMPLE_RATE: configEntry('CV_TRANSCODE_SAMPLE_RATE', 44100),
+  },
 };
 
 let injectedConfig: CommonVoiceConfig;
