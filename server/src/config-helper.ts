@@ -54,6 +54,7 @@ export type CommonVoiceConfig = {
      FORMAT: string;
      SAMPLE_RATE: number;
   };
+  SENTENCES_FOLDER: string;
 };
 
 const castDefault = (value: string): any => value;
@@ -114,6 +115,7 @@ const BASE_CONFIG: CommonVoiceConfig = {
      FORMAT: configEntry('CV_TRANSCODE_FORMAT', 'mp3'),
      SAMPLE_RATE: configEntry('CV_TRANSCODE_SAMPLE_RATE', 44100),
   },
+  SENTENCES_FOLDER: configEntry('CV_SENTENCES_FOLDER', 'server/data/'),
 };
 
 let injectedConfig: CommonVoiceConfig;

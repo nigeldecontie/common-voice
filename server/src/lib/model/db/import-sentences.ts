@@ -5,9 +5,11 @@ import { PassThrough } from 'stream';
 import promisify from '../../../promisify';
 import { hashSentence } from '../../utility';
 import { redis, useRedis } from '../../redis';
+import { getConfig } from '../../../config-helper';
 
 const CWD = process.cwd();
-const SENTENCES_FOLDER = path.resolve(CWD, 'server/data/');
+const config = getConfig();
+const SENTENCES_FOLDER = path.resolve(CWD, config.SENTENCES_FOLDER);
 
 // for sources with sentences that are likely to have repeats across
 // locales, we want to generate a unique hash for each locale + sentence,
