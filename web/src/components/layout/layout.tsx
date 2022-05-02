@@ -302,7 +302,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             </button>
           </div>
         </header>
-        {showStagingBanner && (
+        {false && showStagingBanner && (
           <div className="staging-banner">
             You're on the staging server. Voice data is not collected here.{' '}
             <a href={URLS.HTTP_ROOT} target="_blank" rel="noopener noreferrer">
