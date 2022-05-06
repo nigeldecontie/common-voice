@@ -199,7 +199,7 @@ logout = Log Out
 
 ## Home Page
 home-title = Common Voice is Mozilla's initiative to help teach machines how real people speak.
-default-tagline = Mozilla Common Voice is an initiative to help teach machines how real people speak.
+default-tagline = Canadian Indigenous languages technology project
 home-cta = Speak up, contribute here!
 wall-of-text-start =
   Voice is natural, voice is human. That’s why we’re fascinated with creating usable voice
@@ -214,13 +214,17 @@ wall-of-text-more-desktop =
   to make innovative apps for devices and the web. Read a sentence to help machines learn how real people speak. Check the work of other
   contributors to improve the quality. It’s that simple!
 wall-of-text-first =
-  Voice is natural, voice is human. That’s why we’re excited about creating usable voice technology
-  for our machines. But to create voice systems, developers need an extremely large amount of voice
-  data.
+  In September 2019, the Tŝilhqot'in National Government's language department
+  began a project to expand its language database of audio recordings and
+  transcriptions, extend its suite of language applications, and build language
+  technology and transcription capability in the community.
 wall-of-text-second =
-  Most of the data used by large companies isn’t available to the majority of people. We think that
-  stifles innovation. So we’ve launched Common Voice, a project to help make voice recognition open
-  and accessible to everyone.
+  The project gave several young Tŝilhqot'in a chance to work with elders and
+  language experts on language revitalization, gaining priceless exposure to
+  their ancestral language on the job, as well as the opportunity to start a
+  career in an information or language technologies field. The team
+  significantly advanced the community's language technology assets, and shared
+  their experience with others who may be interested in similar initiatives.
 show-wall-of-text = Read More
 help-us-title = Help us validate sentences!
 help-us-explain = Press play, listen & tell us: did they accurately speak the sentence below?
