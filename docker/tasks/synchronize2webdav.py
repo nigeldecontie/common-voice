@@ -6,6 +6,7 @@
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
+import json
 import requests
 import sys
 import tempfile
@@ -13,8 +14,14 @@ import untangle   # untangle parses an XML document and returns a Python object 
 
 from pathlib import Path
 from tqdm import tqdm
+from typing import (
+        Any,
+        Generator,
+        Tuple,
+        )
 from webdav3.client import Client
 
+from webdav3.exceptions import ConnectionException as webdavConnectionException
 
 
 def test(
@@ -22,16 +29,16 @@ def test(
         webdav_login: str,
         webdav_password: str,
         ):
-    options = {
-            'webdav_hostname': webdav_hostname,
-            'webdav_login':    webdav_login,
-            'webdav_password': webdav_password,
+    nextcloud_options = {
+            "webdav_hostname": webdav_hostname,
+            "webdav_login":    webdav_login,
+            "webdav_password": webdav_password,
             }
-    nextcloud_client = Client(options)
+    nextcloud_client = Client(nextcloud_options)
 
     #print(nextcloud_client.info("CommonVoice"))
     #print(nextcloud_client.info("CommonVoice/SAMUEL.md"))
-    print(*nextcloud_client.list("CommonVoice", get_info=True), sep='\n')
+    print(*nextcloud_client.list("CommonVoice", get_info=True), sep="\n")
 
     # Upload resource
     #nextcloud_client.upload_sync(
@@ -50,26 +57,19 @@ def test(
 
 
 
+#CV_S3_CONFIG='{"endpoint": "http://s3proxy:80", "accessKeyId": "local-identity", "secretAccessKey": "local-credential", "s3ForcePathStyle": true}'
 def synchronize(
         webdav_hostname: str,
         webdav_login: str,
         webdav_password: str,
-        #s3proxy_ip: str = "s3proxy",
-        s3proxy_ip: str = "127.0.0.1",
+        s3_config_str: str,
         ):
     """
     Synchronize the audio clips from S3Proxy to NRC's nextcloud.
     """
-    s3_url = f"http://{s3proxy_ip}:9001/common-voice-clips"
-    options = {
-            'webdav_hostname': f"https://{webdav_hostname}/remote.php/dav/files/{webdav_login}/",
-            'webdav_login':    webdav_login,
-            'webdav_password': webdav_password,
-            }
+    s3_config = json.loads(s3_config_str)
+    s3_url = f"{s3_config['endpoint']}/common-voice-clips"
     logging.info(f"S3: {s3_url}")
-    logging.info(f"NextCloud: {webdav_hostname}")
-
-    nextcloud_client = Client(options)
 
     # What is on the server?
     s3 = untangle.parse(s3_url)
@@ -78,8 +78,16 @@ def synchronize(
         logging.info("S3 is empty")
         sys.exit()
 
+    nextcloud_options = {
+            "webdav_hostname": f"{webdav_hostname}/remote.php/dav/files/{webdav_login}/",
+            "webdav_login":    webdav_login,
+            "webdav_password": webdav_password,
+            }
+    logging.info(f"NextCloud: {webdav_hostname}")
+    nextcloud_client = Client(nextcloud_options)
+
     # What is on our backup?
-    def recursive_list(root: str = "CommonVoice"):
+    def recursive_list(root: str = "CommonVoice") -> Generator[Tuple[str, Any], None, None]:
         """
         """
         directories = nextcloud_client.list(root, get_info=True)
@@ -87,15 +95,15 @@ def synchronize(
         for directory in directories:
             path = Path(directory["path"])
             # /remote.php/dav/files/2c523d8d-449f-4176-bb05-SSSSSSSSSSSS/CommonVoice/
-            path = Path('/'.join(path.parts[5:]))
+            path = Path("/".join(path.parts[5:]))
             items = nextcloud_client.list(str(path), get_info=True)
             items = filter(lambda d: not d["isdir"], items)
             for item in items:
                 path = Path(item["path"])
-                path = Path('/'.join(path.parts[6:]))
+                path = Path("/".join(path.parts[6:]))
                 yield (str(path), item)
 
-    nextcloud = { name for name, _ in recursive_list() }
+    nextcloud = {name for name, _ in recursive_list()}
 
     missing_recordings = {
             f.Key.cdata for f in s3.ListBucketResult.Contents[1:]
@@ -115,6 +123,12 @@ def synchronize(
 
 
 if __name__ == "__main__":
-    if not ( 4<= len(sys.argv) <= 5):
-        print("Usage pgm hostname login password [s3proxy/ip]")
-    synchronize(*sys.argv[1:])
+    if not (len(sys.argv) <= 5):
+        print("Usage pgm nextcloud_hostname nextcloud_login nextcloud_password s3proxy/ip", file=sys.stderr)
+        print(f"current arguments are: {sys.argv}", file=sys.stderr)
+        print("Have you properly setup .env-tasks's WEBDAV_HOSTNAME, WEBDAV_LOGIN, WEBDAV_PASSWORD?", file=sys.stderr)
+        print("Have you properly setup .env-local-docker's CV_S3_CONFIG?", file=sys.stderr)
+    try:
+        synchronize(*sys.argv[1:])
+    except webdavConnectionException:
+        logging.error("Connection timed out for nextcloud.")

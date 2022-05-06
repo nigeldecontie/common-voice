@@ -63,6 +63,7 @@ services:
     command: crond -f -l 8
     env_file:
       - .env-tasks
+      - .env-local-docker  # Using CV_S3_CONFIG
     volumes:
       - ./docker/tasks/cron_tasks_folder/15min:/etc/periodic/15min/:ro
       - ./docker/tasks/cron_tasks_folder/hourly:/etc/periodic/hourly/:ro
