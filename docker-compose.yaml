@@ -70,5 +70,24 @@ services:
     user: ${CURRENT_UID}
 
 
+  database_backup:
+    container_name: database_backup
+    build:
+      context: ./docker/tasks/database_backup
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    networks:
+      - voice-web
+    command: crond -f -l 8
+    env_file:
+      - .env-tasks
+      - .env-local-docker  # Using CV_S3_CONFIG
+    volumes:
+      - ./docker/tasks/database_backup/cron_tasks/15min:/etc/periodic/15min/:ro
+      - ./docker/tasks/database_backup/cron_tasks/hourly:/etc/periodic/hourly/:ro
+    user: ${CURRENT_UID}
+
+
 networks:
   voice-web:

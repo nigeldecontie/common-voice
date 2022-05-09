@@ -1,0 +1,7 @@
+#!/bin/sh
+
+readonly db_backup_name=db.backup.$(date +"%Y-%m-%d:%H:%m:%s").sql
+
+echo "$WEBDAV_HOSTNAME  $WEBDAV_LOGIN  $WEBDAV_PASSWORD" >&2
+mysqldump -P 3306 -h db -u root --password=$WEBDAV_PASSWORD voiceweb > $db_backup_name
+curl -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD -T $db_backup_name https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/
