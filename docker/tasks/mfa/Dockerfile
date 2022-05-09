@@ -22,15 +22,15 @@ RUN --mount=type=cache,target=/opt/conda/pkgs \
    conda config --add channels conda-forge \
    && conda install python=3.9 montreal-forced-aligner libffi=3.3
 
-## [MFA - Populate Models](https://montreal-forced-aligner.readthedocs.io/en/latest/first_steps/index.html#first-steps)
-#RUN \
-#   mfa model download acoustic english_us_arpa \
-#   && mfa model download dictionary english_us_arpa \
-#   && mfa validate ~/mfa_data/my_corpus english_us_arpa english_us_arpa
+# [MFA - Populate Models](https://montreal-forced-aligner.readthedocs.io/en/latest/first_steps/index.html#first-steps)
+RUN \
+   mfa model download acoustic french_qc \
+   && mfa model download dictionary french_ipa
+#   && mfa validate ~/mfa_data/my_corpus french_qc french_ipa
 
 # Add the cron job
 # For debugging, we will run the 15 minutes tasks every 2 minutes.
-RUN crontab <(crontab -l; echo "*/2 * * * * bash /etc/periodic/15min/align.sh")
-RUN crontab <(crontab -l; echo "*/15 * * * * bash /etc/periodic/15min/align.sh")
+RUN { crontab -l; echo "*/2 * * * * bash /etc/periodic/15min/align.sh"; } | crontab -
+RUN { crontab -l; echo "*/15 * * * * bash /etc/periodic/15min/align.sh"; } | crontab -
 
 CMD cron
