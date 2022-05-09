@@ -89,5 +89,21 @@ services:
     user: ${CURRENT_UID}
 
 
+  mfa:
+    container_name: mfa
+    build:
+      context: ./docker/tasks/mfa
+      dockerfile: Dockerfile
+    depends_on:
+      - s3proxy
+    networks:
+      - voice-web
+    command: crond -f -l 8
+    volumes:
+      - ./docker/tasks/mfa/cron_tasks/15min:/etc/periodic/15min/:ro
+      - ./docker/tasks/mfa/cron_tasks/hourly:/etc/periodic/hourly/:ro
+    user: ${CURRENT_UID}
+
+
 networks:
   voice-web:
