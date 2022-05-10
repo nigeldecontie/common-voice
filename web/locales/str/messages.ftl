@@ -214,12 +214,12 @@ wall-of-text-more-desktop =
   to make innovative apps for devices and the web. Read a sentence to help machines learn how real people speak. Check the work of other
   contributors to improve the quality. It’s that simple!
 wall-of-text-first =
-  In September 2019, the Tŝilhqot'in National Government's language department
+  In September 2019, the Tŝilhqot’in National Government's language department
   began a project to expand its language database of audio recordings and
   transcriptions, extend its suite of language applications, and build language
   technology and transcription capability in the community.
 wall-of-text-second =
-  The project gave several young Tŝilhqot'in a chance to work with elders and
+  The project gave several young Tŝilhqot’in a chance to work with elders and
   language experts on language revitalization, gaining priceless exposure to
   their ancestral language on the job, as well as the opportunity to start a
   career in an information or language technologies field. The team
