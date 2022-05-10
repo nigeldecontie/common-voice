@@ -5,7 +5,17 @@ readonly db_backup_name=db.backup.$(date +"%H%M").sql
 
 echo "15 Minutes Database Backup"
 echo "$WEBDAV_HOSTNAME  $WEBDAV_LOGIN  $WEBDAV_PASSWORD" >&2
+
+# Dump the Database to a file.
 mysqldump -P 3306 -h db -u root --password=$CV_DB_ROOT_PASS voiceweb > $db_backup_name
+
+# Log size and sha1 of backup.
 ls -l $db_backup_name
 sha1sum $db_backup_name
-curl -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD -T $db_backup_name https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/
+
+# mkdirs
+curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/
+curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
+
+# Upload backup.
+curl -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD -T $db_backup_name https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
