@@ -1,9 +1,8 @@
 #!/bin/sh
 
-#TODO: We should only keep X backup of the database.
-readonly db_backup_name=db.backup.$(date +"%H%M").sql
+readonly db_backup_name=db.backup.$(date +"%F:%T").sql
 
-echo "15 Minutes Database Backup"
+echo "Daily Database Backup"
 echo "$WEBDAV_HOSTNAME  $WEBDAV_LOGIN  $WEBDAV_PASSWORD" >&2
 mysqldump -P 3306 -h db -u root --password=$CV_DB_ROOT_PASS voiceweb > $db_backup_name
 ls -l $db_backup_name

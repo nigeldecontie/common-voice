@@ -85,7 +85,7 @@ services:
       - .env-local-docker  # Using CV_S3_CONFIG
     volumes:
       - ./docker/tasks/database_backup/cron_tasks/15min:/etc/periodic/15min/:ro
-      - ./docker/tasks/database_backup/cron_tasks/hourly:/etc/periodic/hourly/:ro
+      - ./docker/tasks/database_backup/cron_tasks/hourly:/etc/periodic/daily/:ro
     user: ${CURRENT_UID}
 
 
