@@ -24,7 +24,7 @@ from webdav3.client import Client
 from webdav3.exceptions import ConnectionException as webdavConnectionException
 
 
-def test(
+def test_nextcloud(
         webdav_hostname: str,
         webdav_login: str,
         webdav_password: str,
@@ -54,6 +54,72 @@ def test(
     if False:
         r = requests.get("http://s3proxy:9001/common-voice-clips")
         print(r.text)
+
+
+
+def test_s3():
+    """
+    Learning how AWS S3 boto works.
+    """
+    import boto3
+    BucketName="smallteamtest"
+    test_filename="CommonVoice/requirements.txt"
+
+    # List Buckets
+    client = boto3.client('s3')
+    response = client.list_buckets()
+    print(json.dumps(response, indent=3, sort_keys=True, default=str))
+    for bucket in response["Buckets"]:
+        print(bucket["Name"])
+
+    # Upload a file
+    if False:
+        with open("requirements.txt", mode="r", encoding="UTF-8") as f:
+            object_data = f.read()
+            client.put_object(
+                    Body=object_data,
+                    Bucket=BucketName,
+                    Key=test_filename,
+                    )
+
+    with open("requirements.txt", mode="rb") as f:
+        client.upload_fileobj(
+                Fileobj=f,
+                Bucket=BucketName,
+                Key=test_filename,
+                )
+
+    # Check that the file is there
+    response = client.list_objects(Bucket=BucketName)
+    print(json.dumps(response, indent=3, sort_keys=True, default=str))
+
+    # Download the file
+    response = client.get_object(
+            Bucket=BucketName,
+            Key=test_filename,
+            )
+    print(json.dumps(response, indent=3, sort_keys=True, default=str))
+
+
+
+    if False:
+        response = client.create_bucket(
+                #ACL="private",
+                #Bucket="S3://CommonVoice",
+                Bucket="commonVoice",
+                #CreateBucketConfiguration={
+                #    "LocationConstraint": "us-east-2",
+                #    },
+                #GrantFullControl="string",
+                #GrantRead="string",
+                #GrantReadACP="string",
+                #GrantWrite="string",
+                #GrantWriteACP="string",
+                #ObjectLockEnabledForBucket=True|False,
+                #ObjectOwnership="BucketOwnerPreferred"|"ObjectWriter"|"BucketOwnerEnforced"
+                )
+        print(response)
+
 
 
 

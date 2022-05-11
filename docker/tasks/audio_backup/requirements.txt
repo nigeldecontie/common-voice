@@ -1,6 +1,7 @@
 # python3 -m venv venv
 # source venv/bin/activate ""
 # python -m pip install --requirement requirements.txt
+boto3
 requests
 tqdm
 untangle
