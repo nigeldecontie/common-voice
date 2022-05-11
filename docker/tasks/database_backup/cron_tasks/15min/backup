@@ -14,8 +14,12 @@ ls -l $db_backup_name
 sha1sum $db_backup_name
 
 # mkdirs
-curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/
-curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
+curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/
+curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
+#curl -X PROPFIND -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/ \
+#|| curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/
+#curl -X PROPFIND -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/ \
+#|| curl -X MKCOL -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
 
 # Upload backup.
-curl -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD -T $db_backup_name https://nextcloud.nrc-cnrc.gc.ca/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
+curl -u $WEBDAV_LOGIN:$WEBDAV_PASSWORD -T $db_backup_name $WEBDAV_HOSTNAME/remote.php/dav/files/$WEBDAV_LOGIN/CommonVoice/DBs/
