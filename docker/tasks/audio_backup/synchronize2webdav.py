@@ -17,6 +17,7 @@ from tqdm import tqdm
 from typing import (
         Any,
         Generator,
+        Set,
         Tuple,
         )
 from webdav3.client import Client
@@ -123,6 +124,90 @@ def test_s3():
 
 
 
+class NextCloud:
+    """
+    """
+    def __init__(self, webdav_hostname, webdav_login, webdav_password):
+        """
+        """
+        nextcloud_options = {
+                "webdav_hostname": f"{webdav_hostname}/remote.php/dav/files/{webdav_login}/",
+                "webdav_login":    webdav_login,
+                "webdav_password": webdav_password,
+                }
+        logging.info(f"NextCloud: {webdav_hostname}")
+        self.nextcloud_client = Client(nextcloud_options)
+
+    # What is on our backup?
+    def _recursive_list(self, root: str = "CommonVoice") -> Generator[Tuple[str, Any], None, None]:
+        """
+        """
+        directories = self.nextcloud_client.list(root, get_info=True)
+        directories = filter(lambda d: d["isdir"], directories)
+        for directory in directories:
+            path = Path(directory["path"])
+            # /remote.php/dav/files/2c523d8d-449f-4176-bb05-SSSSSSSSSSSS/CommonVoice/
+            path = Path("/".join(path.parts[5:]))
+            items = self.nextcloud_client.list(str(path), get_info=True)
+            items = filter(lambda d: not d["isdir"], items)
+            for item in items:
+                path = Path(item["path"])
+                path = Path("/".join(path.parts[6:]))
+                yield (str(path), item)
+
+    def file_names(self) -> Set[str]:
+        """
+        """
+        return {name for name, _ in self._recursive_list()}
+
+
+    def backup(self, name, filename):
+        """
+        """
+        self.nextcloud_client.mkdir("CommonVoice/" + str(Path(name).parent))
+        self.nextcloud_client.upload_sync(
+                local_path=filename,
+                remote_path=f"CommonVoice/{name}",
+                )
+
+
+
+class S3Proxy:
+    """
+    """
+    def __init__(self, s3_config_str):
+        """
+        """
+        s3_config = json.loads(s3_config_str)
+        self.s3_url = f"{s3_config['endpoint']}/common-voice-clips"
+        logging.info(f"S3: {self.s3_url}")
+
+        # What is on the server?
+        self.s3 = untangle.parse(self.s3_url)
+
+
+    @property
+    def empty(self) -> bool:
+        """
+        """
+        return not hasattr(self.s3.ListBucketResult, "Contents")
+
+
+    def file_names(self) -> Set[str]:
+        """
+        """
+        return {f.Key.cdata for f in self.s3.ListBucketResult.Contents[1:]}
+
+
+    def store(self, name: str, file_handle):
+        """
+        """
+        r = requests.get(f"{self.s3_url}/{name}")
+        # TODO Check requests' error code.
+        file_handle.write(r.content)
+
+
+
 #CV_S3_CONFIG='{"endpoint": "http://s3proxy:80", "accessKeyId": "local-identity", "secretAccessKey": "local-credential", "s3ForcePathStyle": true}'
 def synchronize(
         webdav_hostname: str,
@@ -133,56 +218,20 @@ def synchronize(
     """
     Synchronize the audio clips from S3Proxy to NRC's nextcloud.
     """
-    s3_config = json.loads(s3_config_str)
-    s3_url = f"{s3_config['endpoint']}/common-voice-clips"
-    logging.info(f"S3: {s3_url}")
-
-    # What is on the server?
-    s3 = untangle.parse(s3_url)
+    s3 = S3Proxy(s3_config_str)
     #print(s3)
-    if not hasattr(s3.ListBucketResult, "Contents"):
-        logging.info("S3 is empty")
+    if s3.empty:
+        logging.info("S3 is empty, nothing to do.")
         sys.exit()
 
-    nextcloud_options = {
-            "webdav_hostname": f"{webdav_hostname}/remote.php/dav/files/{webdav_login}/",
-            "webdav_login":    webdav_login,
-            "webdav_password": webdav_password,
-            }
-    logging.info(f"NextCloud: {webdav_hostname}")
-    nextcloud_client = Client(nextcloud_options)
+    next_cloud = NextCloud(webdav_hostname, webdav_login, webdav_password)
 
-    # What is on our backup?
-    def recursive_list(root: str = "CommonVoice") -> Generator[Tuple[str, Any], None, None]:
-        """
-        """
-        directories = nextcloud_client.list(root, get_info=True)
-        directories = filter(lambda d: d["isdir"], directories)
-        for directory in directories:
-            path = Path(directory["path"])
-            # /remote.php/dav/files/2c523d8d-449f-4176-bb05-SSSSSSSSSSSS/CommonVoice/
-            path = Path("/".join(path.parts[5:]))
-            items = nextcloud_client.list(str(path), get_info=True)
-            items = filter(lambda d: not d["isdir"], items)
-            for item in items:
-                path = Path(item["path"])
-                path = Path("/".join(path.parts[6:]))
-                yield (str(path), item)
-
-    nextcloud = {name for name, _ in recursive_list()}
-
-    missing_recordings = {
-            f.Key.cdata for f in s3.ListBucketResult.Contents[1:]
-            }.difference(nextcloud)
+    missing_recordings = s3.file_names().difference(next_cloud.file_names())
     for name in tqdm(missing_recordings, desc="Sync S3 => nextcloud", unit="Items"):
+        # NextCloud wants a file on the filesystem.
         with tempfile.NamedTemporaryFile() as temp:
-            r = requests.get(f"{s3_url}/{name}")
-            temp.write(r.content)
-            nextcloud_client.mkdir("CommonVoice/" + str(Path(name).parent))
-            nextcloud_client.upload_sync(
-                    local_path=temp.name,
-                    remote_path=f"CommonVoice/{name}",
-                    )
+            s3.store(name, temp)
+            next_cloud.backup(name, temp.name)
 
 
 
