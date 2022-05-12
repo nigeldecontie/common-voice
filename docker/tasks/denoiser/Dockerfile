@@ -8,15 +8,13 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
    && update-rc.d cron enable 3
 
 RUN \
-    git clone https://github.com/xiph/rnnoise.git
-RUN \
-    cd /rnnoise \
+    git clone https://github.com/xiph/rnnoise.git \
+    && cd /rnnoise \
     && ./autogen.sh \
     && ./configure --prefix $PWD/pkg/usr/local \
     && make -j $(nproc) \
-    && make install
-RUN \
-    mkdir -p /rnnoise/pkg/usr/local/bin \
+    && make install \
+    && mkdir -p /rnnoise/pkg/usr/local/bin \
     && mkdir -p /rnnoise/pkg/usr/local/bin/.libs \
     && install -c -m 755 /rnnoise/examples/rnnoise_demo /rnnoise/pkg/usr/local/bin/ \
     && install -c -m 755 /rnnoise/examples/.libs/rnnoise_demo /rnnoise/pkg/usr/local/bin/.libs/ \
