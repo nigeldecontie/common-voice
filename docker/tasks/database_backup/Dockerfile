@@ -12,6 +12,6 @@ RUN --mount=type=cache,target=/var/cache/apk \
    apk add --update --no-cache mysql-client curl
 
 # For debugging, we will run the 15 minutes tasks every 2 minutes.
-RUN echo "*/2   *       *       *       *       run-parts /etc/periodic/15min" >> /etc/crontabs/root
+#RUN echo "*/2   *       *       *       *       run-parts /etc/periodic/15min" >> /etc/crontabs/root
 
 CMD ["crond", "-f", "-l", "8"]
