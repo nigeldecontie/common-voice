@@ -203,16 +203,18 @@ default-tagline = Canadian Indigenous languages technology project
 home-cta = Speak up, contribute here!
 wall-of-text-start =
   Voice is natural, voice is human. That’s why we’re fascinated with creating usable voice
-  technology for our machines. But to create voice systems, an extremely large amount of voice
+  technology for our machines. But to create voice systems, a large amount of voice
   data is required.
 wall-of-text-more-mobile =
   Most of the data used by large companies isn’t available to the majority of people. We think
   that stifles innovation. So we’ve launched Project Common Voice, a project to help make voice
-  recognition open to everyone.
+  recognition open to everyone. lorem ipsum
 wall-of-text-more-desktop =
-  Now you can donate your voice to help us build an open-source voice database that anyone can use
-  to make innovative apps for devices and the web. Read a sentence to help machines learn how real people speak. Check the work of other
-  contributors to improve the quality. It’s that simple! lorem ipsum rewrite to respect data sovereignty.
+  Now you can record your voice to help build a database for your language that can be used to build
+  speech technology tools for your community. Read a sentence to help machines learn how real people speak.
+  Check the work of other contributors to improve the quality. It’s that simple!
+  And do all this in a way that respects your community's data sovereignty
+  when you're using your own server or something something lorem ipsum
 wall-of-text-first =
   In September 2019, the Tŝilhqot’in National Government's language department
   began a project to expand its language database of audio recordings and
@@ -233,10 +235,10 @@ vote-yes = Yes
 vote-no = No
 toggle-play-tooltip = Press { shortcut-play-toggle } to toggle play mode
 speak-subtitle = Donate your voice
-speak-paragraph = Recording voice clips is an integral part of building our open dataset; some would say it's the fun part too.
+speak-paragraph = Recording voice clips is an integral part of building a dataset; some would say it's the fun part too.
 speak-goal-text = Clips recorded
 listen-subtitle = Help us validate voices
-listen-paragraph = Validating donated clips is equally important to the Common Voice mission. Take a listen and help us create quality open source voice data.
+listen-paragraph = Validating recorded clips is equally important to the Common Voice mission. Take a listen and help us create quality voice data.
 listen-goal-text = Clips validated
 hours-recorded = Hours Recorded
 hours-validated = Hours Validated
@@ -260,7 +262,7 @@ x-years-short =
   { $count ->
     *[other] { $count }y
   }
-help-make-dataset = Help us build a high quality, lorem ipsum publicly open dataset
+help-make-dataset = Help build a high quality dataset for your language. Lorem ipsum
 sign-up-account = Sign up for an account
 email-subscription-title = sign up for email updates
 email-subscription-title-new = Sign up for Common Voice newsletters, goal reminders and progress updates
