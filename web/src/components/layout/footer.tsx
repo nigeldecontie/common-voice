@@ -94,9 +94,9 @@ export default React.memo(() => {
           </div>
         </div>
 
-        <div id="email-subscription">
+        {/* <div id="email-subscription">
           <SubscribeNewsletter />
-        </div>
+        </div> */}
 
         <Localized id="back-top">
           <TextButton

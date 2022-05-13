@@ -26,10 +26,10 @@ const About: React.ComponentType = React.memo(() => {
           },
           Nav,
         ],
-        [SECTIONS.HOW_IT_WORKS, HowItWorks],
-        [SECTIONS.SUBSCRIBE, Subscribe],
-        [SECTIONS.PLAYBOOK, Playbook],
-        [SECTIONS.GET_INVOLVED, GetInvolved],
+        // [SECTIONS.HOW_IT_WORKS, HowItWorks], // Too different from the ILT variant
+        // [SECTIONS.SUBSCRIBE, Subscribe], // Disable Mozilla Foundation's subscription link on custom install
+        // [SECTIONS.PLAYBOOK, Playbook], // disable MF specific section
+        // [SECTIONS.GET_INVOLVED, GetInvolved], // disable MF specific section
       ].map(([section, SectionComponent]: [string, any], index: number) => {
         if (typeof section === 'object') {
           return <SectionComponent key={`section-${index}`} {...section} />;
