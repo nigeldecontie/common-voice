@@ -1,13 +1,13 @@
 # vim:nowrap:
 # [Running cron jobs in a Docker Alpine container](https://devopsheaven.com/cron/docker/alpine/linux/2017/10/30/run-cron-docker-alpine.html)
 
-#FROM frolvlad/alpine-miniconda3:python3.7@sha256:bf5c88b66776e27b6745a7489104263d4ec05748eb447e7a292a0c4b5ed6c074
 FROM ubuntu:22.04@sha256:aa6c2c047467afc828e77e306041b7fa4a65734fe3449a54aa9c280822b0d87d 
 
 # Install base utilities
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
    apt-get update \
-   && apt-get install -y build-essential wget cron
+   && apt-get install -y build-essential wget cron \
+   && update-rc.d cron enable 3
 
 # Install miniconda
 ENV CONDA_DIR /opt/conda
@@ -26,6 +26,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs \
 # [MFA - Populate Models](https://montreal-forced-aligner.readthedocs.io/en/latest/first_steps/index.html#first-steps)
 RUN \
    mfa model download acoustic french_qc \
+   && mfa model download acoustic english \
    && mfa model download dictionary french_ipa
 #   && mfa validate ~/mfa_data/my_corpus french_qc french_ipa
 
