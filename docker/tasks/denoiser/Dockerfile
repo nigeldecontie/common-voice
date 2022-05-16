@@ -29,7 +29,7 @@ ENV LD_LIBRARY_PATH /usr/local/lib
 # Install `cron`.
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
    apt-get update \
-   && apt-get install -y cron \
+   && apt-get install -y cron sox \
    && update-rc.d cron enable 3
 
 COPY --from=builder /rnnoise.tar.gz /
