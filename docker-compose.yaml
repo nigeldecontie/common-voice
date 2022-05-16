@@ -105,5 +105,21 @@ services:
     user: ${CURRENT_UID}
 
 
+  denoiser:
+    container_name: denoiser
+    build:
+      context: ./docker/tasks/denoiser
+      dockerfile: Dockerfile
+    depends_on:
+      - s3proxy
+    networks:
+      - voice-web
+    #command: bash -c top
+    #volumes:
+    #  - ./docker/tasks/mfa/cron_tasks/15min:/etc/periodic/15min/:ro
+    #  - ./docker/tasks/mfa/cron_tasks/hourly:/etc/periodic/hourly/:ro
+    user: ${CURRENT_UID}
+
+
 networks:
   voice-web:
