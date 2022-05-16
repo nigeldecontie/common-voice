@@ -27,7 +27,8 @@ FROM ubuntu:22.04@sha256:aa6c2c047467afc828e77e306041b7fa4a65734fe3449a54aa9c280
 ENV LD_LIBRARY_PATH /usr/local/lib
 
 # Install `cron`.
-RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+#RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+RUN \
    apt-get update \
    && apt-get install -y cron sox \
    && update-rc.d cron enable 3
