@@ -1,3 +1,4 @@
+# vim:nowrap:
 # https://github.com/rjocoleman/docker-alpine-s3fs/blob/master/Dockerfile
 FROM alpine:3.15 as builder
 
