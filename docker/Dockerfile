@@ -24,7 +24,11 @@ RUN apt-get update && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
-    apt-get install --no-install-recommends -y yarn ffmpeg
+    apt-get install --no-install-recommends -y yarn ffmpeg \
+    && apt-get clean \
+    && apt-get autoremove \
+    && rm -fr /var/lib/apt/lists/*
+
 
 ENV GIT_COMMIT_SHA=${COMMIT}
 
