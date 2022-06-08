@@ -42,6 +42,11 @@ html[lang='az'] {
     --base-font-family: 'Inter', sans-serif;
 }
 
+html[lang='git'],
+html[lang='str'] {
+    --base-font-family: 'BCSans', sans-serif;
+}
+
 html {
     font-family: var(--base-font-family);
     font-size: var(--font-size);
