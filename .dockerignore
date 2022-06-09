@@ -1,0 +1,11 @@
+.git/
+aws/
+docker/tasks/
+server/data/
+venv/
+
+com.docker.cli
+diff.patch
+docker-linux-amd64
+sentence_generator_lipsum.py
+sentocen.alphabet
