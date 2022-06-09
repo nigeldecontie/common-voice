@@ -1,0 +1,25 @@
+# CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
+
+version: '3'
+services:
+  web:
+    ports:
+      - 8070:9000
+    user: ${CURRENT_UID}
+
+  tasks:
+    container_name: tasks
+    build:
+      context: ./docker/tasks/
+      dockerfile: Dockerfile
+    depends_on:
+      - s3proxy
+    networks:
+      - voice-web
+    command: crond -f -l 8
+    env_file:
+      - .env-tasks
+      - .env-local-docker  # Using CV_S3_CONFIG
+    volumes:
+      - ./docker/tasks/cron_tasks_folder/15min:/etc/periodic/15min/:ro
+      - ./docker/tasks/cron_tasks_folder/hourly:/etc/periodic/hourly/:ro

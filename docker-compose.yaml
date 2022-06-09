@@ -1,5 +1,3 @@
-# CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
-
 version: '3'
 services:
   db:
@@ -14,14 +12,12 @@ services:
       - MYSQL_PASSWORD=voicecommons
       - MYSQL_ROOT_PASSWORD=voicewebroot
     command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
-
   redis:
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
     networks:
       - voice-web
-
   s3proxy:
     image: andrewgaul/s3proxy
     container_name: s3proxy
@@ -31,7 +27,6 @@ services:
       - voice-web
     environment:
       - S3PROXY_AUTHORIZATION=none
-
   web:
     build:
       context: .
@@ -46,28 +41,9 @@ services:
       - DOTENV_CONFIG_PATH=/code/.env-local-docker
     networks:
       - voice-web
-    ports:
-      - 9000:9000
+#    ports:
+#      - 9000:9000
     command: bash -c "/code/docker/wait-for-it.sh s3proxy:80 -- /code/docker/prepare_s3.sh && yarn && yarn start"
-    user: ${CURRENT_UID}
-
-  tasks:
-    container_name: tasks
-    build:
-      context: ./docker/tasks/
-      dockerfile: Dockerfile
-    depends_on:
-      - s3proxy
-    networks:
-      - voice-web
-    command: crond -f -l 8
-    env_file:
-      - .env-tasks
-      - .env-local-docker  # Using CV_S3_CONFIG
-    volumes:
-      - ./docker/tasks/cron_tasks_folder/15min:/etc/periodic/15min/:ro
-      - ./docker/tasks/cron_tasks_folder/hourly:/etc/periodic/hourly/:ro
-
 
 networks:
   voice-web:
