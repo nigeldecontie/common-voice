@@ -171,7 +171,7 @@ export default function HomePage() {
           </div>
         </section>
       ) : (
-        <RegisterSection marsSrc="/img/mars.svg">
+        <RegisterSection marsSrc="/img/ChangeMe.png">
           <Localized id="help-make-dataset">
             <h1 />
           </Localized>
