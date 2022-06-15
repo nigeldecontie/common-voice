@@ -3,8 +3,8 @@ import { LocaleLink } from '../locale-helpers';
 
 export default (props: { reverse?: boolean }) => {
   const imgSrc = props.reverse
-    ? require('./wmms-blk.svg')
-    : require('./wmms-blk.svg');
+    ? require('/img/ILT CommonVoice.svg')
+    : require('/img/ILT CommonVoice.svg');
 
   return (
     <LocaleLink className="main-logo" to="">
