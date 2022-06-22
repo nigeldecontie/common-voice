@@ -307,7 +307,7 @@ shortcut-vote-no = n
 shortcut-record-toggle = r
 shortcut-record-toggle-label = Record/Stop
 
-shortcut-rerecord-toggle = [1-3]
+shortcut-rerecord-toggle = [1]
 shortcut-rerecord-toggle-label = Re-record clip
 
 shortcut-discard-ongoing-recording = ESC

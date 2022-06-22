@@ -76,7 +76,7 @@ const AccountModal = (props: ModalProps) => {
   );
 };
 
-export const SET_COUNT = 3;
+export const SET_COUNT = 1;
 
 export interface ContributionPillProps {
   isOpen: boolean;
