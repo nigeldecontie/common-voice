@@ -240,6 +240,7 @@ export default class Clip {
         // the stream, at which point ffmpeg can no longer seek back to the beginning
         // createBufferedInputStream will create a local file and pipe data in as
         // a file, which doesn't lose the seek mechanism
+        console.log("Unwrapping AAC from mpeg.");
 
         const converter = new Converter();
         const audioStream = Readable.from(request);
@@ -247,12 +248,16 @@ export default class Clip {
         audioInput = converter.createBufferedInputStream();
         audioStream.pipe(audioInput);
       }
+       else {
+          console.log("Not converting mpeg/AAC");
+       }
 
+      console.log("HEADERS: ", headers);
       const audioOutput = new Transcoder(audioInput)
         .audioCodec(config.TRANSCODE.AUDIO_CODEC)
         .format(config.TRANSCODE.FORMAT)
         .channels(1)
-        .sampleRate(config.TRANSCODE.SAMPLE_RATE)
+        //.sampleRate(config.TRANSCODE.SAMPLE_RATE)
         .on('error', (error: string) => {
           this.clipSaveError(
             headers,
