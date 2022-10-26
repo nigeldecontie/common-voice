@@ -90,7 +90,7 @@ export function getManageSubscriptionURL(account: UserClient) {
 }
 
 export const getAudioFormat = (() => {
-  const preferredFormat = 'audio/ogg; codecs=opus';
+  const preferredFormat = "audio/wav";
   const audio = document.createElement('audio');
   const format = audio.canPlayType(preferredFormat)
     ? preferredFormat
