@@ -139,7 +139,12 @@ export default class AudioWeb {
     analyzerNode.connect(outputNode);
 
     // and set up the recorder.
-    this.recorder = new window.MediaRecorder(outputNode.stream);
+    this.recorder = new window.MediaRecorder(
+      outputNode.stream,
+      {
+        mimeType: "audio/webm;codecs=PCM",
+      },
+    );
 
     // Set up the analyzer node, and allocate an array for its data
     // FFT size 64 gives us 32 bins. But those bins hold frequencies up to
