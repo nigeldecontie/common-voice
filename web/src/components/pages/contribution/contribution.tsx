@@ -94,6 +94,8 @@ interface PropsFromState {
 }
 
 interface Props extends WithLocalizationProps, PropsFromState {
+  sampleRate?: number;
+  onSampleRateChange?: (sampleRate: number) => void;
   demoMode: boolean;
   activeIndex: number;
   errorContent?: any;
@@ -126,6 +128,7 @@ interface State {
   showReportModal: boolean;
   showShareModal: boolean;
   showShortcutsModal: boolean;
+  sampleRate: number;
 }
 
 class ContributionPage extends React.Component<Props, State> {
@@ -139,6 +142,7 @@ class ContributionPage extends React.Component<Props, State> {
     showReportModal: false,
     showShareModal: false,
     showShortcutsModal: false,
+    sampleRate: 96000,
   };
 
   private canvasRef: { current: HTMLCanvasElement | null } = React.createRef();
@@ -293,6 +297,14 @@ class ContributionPage extends React.Component<Props, State> {
     event.preventDefault();
   };
 
+   handleSampleRateChange = (changeEvent: React.ChangeEvent<HTMLInputElement>) => {
+      const sampleRate = parseInt(changeEvent.target.value);
+      this.props.onSampleRateChange(sampleRate);
+      this.setState({
+         sampleRate: sampleRate
+      });
+   };
+
   render() {
     const {
       errorContent,
@@ -441,6 +453,38 @@ class ContributionPage extends React.Component<Props, State> {
                   vars: { actionType: getString('action-click') },
                   children: <div className="instruction hidden-sm-down" />,
                 }) || <div className="instruction hidden-sm-down" />}
+
+                <form>
+
+                  <div className="form-check">
+                    <label>
+                      <input
+                        type="radio"
+                        name="react-tips"
+                        value="96000"
+                        checked={this.state.sampleRate === 96000}
+                        onChange={this.handleSampleRateChange}
+                        className="form-check-input"
+                      />
+                      96kHz
+                    </label>
+                  </div>
+
+                  <div className="form-check">
+                    <label>
+                      <input
+                        type="radio"
+                        name="react-tips"
+                        value="48000"
+                        checked={this.state.sampleRate === 48000}
+                        onChange={this.handleSampleRateChange}
+                        className="form-check-input"
+                      />
+                      48kHz
+                    </label>
+                  </div>
+
+                </form>
 
                 <div className="cards">
                   {sentences.map((sentence, i) => {

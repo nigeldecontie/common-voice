@@ -152,6 +152,7 @@ interface State {
   rerecordIndex?: number;
   showPrivacyModal: boolean;
   showDiscardModal: boolean;
+  sampleRate: number;
 }
 
 const initialState: State = {
@@ -162,6 +163,7 @@ const initialState: State = {
   rerecordIndex: null,
   showPrivacyModal: false,
   showDiscardModal: false,
+  sampleRate: 96000,
 };
 
 class SpeakPage extends React.Component<Props, State> {
@@ -347,7 +349,8 @@ class SpeakPage extends React.Component<Props, State> {
     }
 
     try {
-      await this.audio.init();
+      const sampleRate = this.state.sampleRate;
+      await this.audio.init(sampleRate);
       await this.startRecording();
     } catch (err) {
       if (err in AudioError) {
@@ -578,9 +581,14 @@ class SpeakPage extends React.Component<Props, State> {
     });
   };
 
+   onSampleRateChange = (sampleRate: number) => {
+     this.setState({sampleRate: sampleRate});
+   }
+
   render() {
     const { getString, user } = this.props;
     const {
+      sampleRate,
       clips,
       isSubmitted,
       error,
@@ -655,7 +663,10 @@ class SpeakPage extends React.Component<Props, State> {
               />
             </Localized>
           )}
+          {sampleRate} bits
           <ContributionPage
+            sampleRate={sampleRate}
+            onSampleRateChange={this.onSampleRateChange}
             demoMode={this.demoMode}
             activeIndex={recordingIndex}
             errorContent={this.displayError() && this.returnSpeakError()}

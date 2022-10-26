@@ -112,7 +112,7 @@ export default class AudioWeb {
    * the page is reloaded if the user decides to do so.
    *
    */
-  async init() {
+  async init(sampleRate: number=96000) {
     if (this.isReady()) {
       return;
     }
@@ -121,7 +121,7 @@ export default class AudioWeb {
 
     this.microphone = microphone;
     const audioContext = new (window.AudioContext ||
-      window.webkitAudioContext)();
+      window.webkitAudioContext)({sampleRate: sampleRate});
     const sourceNode = audioContext.createMediaStreamSource(microphone);
     const volumeNode = audioContext.createGain();
     const analyzerNode = audioContext.createAnalyser();
