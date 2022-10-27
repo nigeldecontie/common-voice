@@ -539,8 +539,10 @@ class SpeakPage extends React.Component<Props, State> {
     return true;
   };
 
-  private resetState = (callback?: any) =>
-    this.setState(initialState, callback);
+  private resetState = (callback?: any) => {
+    const newState = {...initialState, sampleRate: this.state.sampleRate };
+    this.setState(newState, callback);
+  };
 
   private agreeToTerms = async () => {
     this.setState({ showPrivacyModal: false });
