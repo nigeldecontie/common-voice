@@ -128,7 +128,6 @@ interface State {
   showReportModal: boolean;
   showShareModal: boolean;
   showShortcutsModal: boolean;
-  sampleRate: number;
 }
 
 class ContributionPage extends React.Component<Props, State> {
@@ -142,7 +141,6 @@ class ContributionPage extends React.Component<Props, State> {
     showReportModal: false,
     showShareModal: false,
     showShortcutsModal: false,
-    sampleRate: 96000,
   };
 
   private canvasRef: { current: HTMLCanvasElement | null } = React.createRef();
@@ -300,9 +298,6 @@ class ContributionPage extends React.Component<Props, State> {
    handleSampleRateChange = (changeEvent: React.ChangeEvent<HTMLInputElement>) => {
       const sampleRate = parseInt(changeEvent.target.value);
       this.props.onSampleRateChange(sampleRate);
-      this.setState({
-         sampleRate: sampleRate
-      });
    };
 
   render() {
@@ -462,7 +457,7 @@ class ContributionPage extends React.Component<Props, State> {
                         type="radio"
                         name="react-tips"
                         value="96000"
-                        checked={this.state.sampleRate === 96000}
+                        checked={this.props.sampleRate === 96000}
                         onChange={this.handleSampleRateChange}
                         className="form-check-input"
                       />
@@ -476,7 +471,7 @@ class ContributionPage extends React.Component<Props, State> {
                         type="radio"
                         name="react-tips"
                         value="48000"
-                        checked={this.state.sampleRate === 48000}
+                        checked={this.props.sampleRate === 48000}
                         onChange={this.handleSampleRateChange}
                         className="form-check-input"
                       />
