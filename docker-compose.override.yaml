@@ -1,6 +1,7 @@
 # CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
 
 version: '3'
+
 services:
   web:
     ports:
