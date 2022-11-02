@@ -117,7 +117,7 @@ export default class AudioWeb {
       return;
     }
 
-    const microphone = await this.getMicrophone();
+    const microphone: MediaStream = await this.getMicrophone();
 
     this.microphone = microphone;
     const audioContext = new (window.AudioContext ||
