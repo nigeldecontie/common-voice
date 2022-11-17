@@ -1,4 +1,6 @@
 # CURRENT_UID=$(id -u):$(id -g) docker-compose --project-name "common-voice" up
+# wget 'https://github.com/docker/compose-cli/releases/download/v1.0.29/docker-linux-amd64'
+# CURRENT_UID=$(id -u):$(id -g) ./docker-linux-amd64 --context ecs.common-voice compose --project-name common-voice up
 
 version: '3'
 
