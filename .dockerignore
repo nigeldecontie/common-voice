@@ -1,6 +1,8 @@
+# Directories
 .git/
 aws/
 docker/tasks/
+server/data.ilt.ref/
 server/data/
 venv/
 
