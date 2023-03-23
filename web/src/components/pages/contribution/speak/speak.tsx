@@ -665,7 +665,6 @@ class SpeakPage extends React.Component<Props, State> {
               />
             </Localized>
           )}
-          {sampleRate} bits
           <ContributionPage
             sampleRate={sampleRate}
             onSampleRateChange={this.onSampleRateChange}

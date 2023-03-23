@@ -19,8 +19,8 @@ export default function RegisterSection({
 }) {
   const [locale] = useLocale();
   const [index, setIndex] = useState(0);
-  const [tab, setTab] = useState('benefits');
-  const isBenefits = tab == 'benefits';
+  const [tab, setTab] = useState('whats-public');
+  const isBenefits = tab == 'whats-public';
   const info = (
     <div className="signup-info">
       <div className="tabs">
@@ -31,7 +31,7 @@ export default function RegisterSection({
             alt="Waves"
           />
         )}
-        {['benefits', 'whats-public'].map(l => (
+        {['whats-public'].map(l => (
           <label key={l}>
             <input
               type="radio"

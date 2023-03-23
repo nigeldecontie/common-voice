@@ -449,7 +449,7 @@ class ContributionPage extends React.Component<Props, State> {
                   children: <div className="instruction hidden-sm-down" />,
                 }) || <div className="instruction hidden-sm-down" />}
 
-                <form>
+                {/* <form>
 
                   <div className="form-check">
                     <label>
@@ -479,7 +479,7 @@ class ContributionPage extends React.Component<Props, State> {
                     </label>
                   </div>
 
-                </form>
+                </form> */}
 
                 <div className="cards">
                   {sentences.map((sentence, i) => {
