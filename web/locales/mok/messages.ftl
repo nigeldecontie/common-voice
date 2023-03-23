@@ -203,34 +203,20 @@ logout = Log Out
 
 ## Home Page
 home-title = Common Voice is Mozilla's initiative to help teach machines how real people speak.
-default-tagline = Canadian Indigenous languages technology project
+default-tagline = Speech Generation for Indigenous Language Education project
 home-cta = Speak up, contribute here!
 wall-of-text-start =
   Voice is natural, voice is human. That’s why we’re fascinated with creating usable voice
   technology for our machines. But to create voice systems, a large amount of voice
   data is required.
 wall-of-text-more-mobile =
-  Most of the data used by large companies isn’t available to the majority of people. We think
-  that stifles innovation. So we’ve launched Project Common Voice, a project to help make voice
-  recognition open to everyone. lorem ipsum
+  While there is no replacement for a speaker of an Indigenous language, there are possible applications for speech synthesis (text-to-speech) to supplement existing text-based tools like verb conjugators, dictionaries and phrasebooks. The National Research Council has partnered with the Onkwawenna Kentyohkwa Kanyen’kéha immersion school, W̱SÁNEĆ School Board, University nuhelot’įne thaiyots’į nistameyimâkanak Blue Quills, and the University of Edinburgh to research and develop state-of-the-art speech synthesis (text-to-speech) systems and techniques for Indigenous languages in Canada, with a focus on how to integrate text-to-speech technology into the classroom.
 wall-of-text-more-desktop =
-  Now you can record your voice to help build a database for your language that can be used to build
-  speech technology tools for your community. Read a sentence to help machines learn how real people speak.
-  Check the work of other contributors to improve the quality. It’s that simple!
-  And do all this in a way that respects your community's data sovereignty
-  when you're using your own server or something something lorem ipsum
+  While there is no replacement for a speaker of an Indigenous language, there are possible applications for speech synthesis (text-to-speech) to supplement existing text-based tools like verb conjugators, dictionaries and phrasebooks. The National Research Council has partnered with the Onkwawenna Kentyohkwa Kanyen’kéha immersion school, W̱SÁNEĆ School Board, University nuhelot’įne thaiyots’į nistameyimâkanak Blue Quills, and the University of Edinburgh to research and develop state-of-the-art speech synthesis (text-to-speech) systems and techniques for Indigenous languages in Canada, with a focus on how to integrate text-to-speech technology into the classroom.
 wall-of-text-first =
-  In September 2019, the Tŝilhqot’in National Government's language department
-  began a project to expand its language database of audio recordings and
-  transcriptions, extend its suite of language applications, and build language
-  technology and transcription capability in the community.
+  There are approximately 70 Indigenous languages spoken in Canada from 10 distinct language families. As a consequence of the residential school system and other policies of cultural suppression, the majority of these languages now have fewer than 500 fluent speakers remaining, most of them elderly. 
 wall-of-text-second =
-  The project gave several young Tŝilhqot’in a chance to work with elders and
-  language experts on language revitalization, gaining priceless exposure to
-  their ancestral language on the job, as well as the opportunity to start a
-  career in an information or language technologies field. The team
-  significantly advanced the community's language technology assets, and shared
-  their experience with others who may be interested in similar initiatives.
+  Despite this, Indigenous people have resisted colonial policies and continued speaking their languages, with interest by students and parents in Indigenous language education continuing to grow. Teachers are often overwhelmed by the number of students, and the trend towards online education means many students who have not previously had access to language classes now do. Supporting these growing cohorts of students comes with unique challenges in languages with few fluent first-language speakers. Teachers are particularly concerned with providing their students with opportunities to hear the language outside of class.
 show-wall-of-text = Read More
 help-us-title = Help us validate sentences!
 help-us-explain = Press play, listen & tell us: did they accurately speak the sentence below?
@@ -266,7 +252,7 @@ x-years-short =
   { $count ->
     *[other] { $count }y
   }
-help-make-dataset = Help build a high quality dataset for your language. Lorem ipsum
+help-make-dataset = Help build a high quality dataset for your language.
 sign-up-account = Sign up for an account
 email-subscription-title = sign up for email updates
 email-subscription-title-new = Sign up for Common Voice newsletters, goal reminders and progress updates
@@ -282,11 +268,11 @@ join-newsletter = Optionally join on our email list for updates and new informat
 
 ## What's public
 whats-public = What's Public?
-email-not-public = We will not make your email public.
-recordings-and-locale-public = The number of recordings and which languages you contribute to will be public. lorem ipsum
-username-optin-public = You can choose to make your username public or anonymous.
-demographic-deidentified-clarity-2 = Optionally submitted demographic data (e.g. age, gender, language, and accent) will never be made public on your profile, and will not be linked to your account in the dataset. Individual audio clips will be associated with demographic data for the purpose of more accurate analysis - for example, a researcher might want to target a training model to a specific demographic segment.
-username-email-not-demographic = Your username and email will not be associated with the published data.
+email-not-public = We will not make your data public.
+recordings-and-locale-public = The recordings are to be used in the Speech Generation for Indigenous Language Education (SGILE) project only.
+username-optin-public = Only SGILE members will have access to this website. Please do not share it, or any of the data in it, with anyone outside of the project.
+demographic-deidentified-clarity-2 = If you want to add more sentences, please contact Sam at NRC <samuel.larkin@nrc-cnrc.gc.ca>
+username-email-not-demographic = If you have any concerns, please contact the Aidan at NRC <aidan.pine@nrc-cnrc.gc.ca>
 
 
 ## Speak & Listen Shortcuts
@@ -501,11 +487,11 @@ faq-search-for-answers =
     .label = Search for answers
 
 ## ABOUT US
-about-title = Why Common Voice Indigenous?
+about-title = Why Common Voice for the Speech Generation for Indigenous Language Education (SGILE) project?
 about-header-description-v2 =
-    <p>Lorem ipsum Common Voice is a publicly available voice datasets, powered by the voices of volunteer contributors around the world, but it assumes that all data can be made available in the public domain.</p>
-    <p>Common Voice Indigenous (TODO fix name) seeks to address data sovereignty issues by Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<p>
-    <p>Indigenous voice data sets will help train TTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <p>There are a lot of people working on the SGILE project, and maintaining a record of what needs to be recorded, and what has been recorded already is fairly complicated! We wanted to build a tool that simplified this process, and still protected our data.</p>
+    <p>Mozilla's Common Voice is a tool for <a href="https://en.wikipedia.org/wiki/Crowdsourcing">crowd-sourcing</a> recordings for Mozilla's speech technologies (mostly speech recognition). The tool is great, but it requires you to make your data open to the world, and this isn't appropriate for our project. So, we "forked" or copied the code base (legally, and with permission!) and made our own version of the website with the help of Indigenous web services company <a href="https://ursacreative.ca/">Ursa Creative</a>.<p>
+    <p>In the SGILE project, there are three main streams or work happening simultaneously - a text stream, where people are working to determine what text will be synthesized (some people are working on verb conjugators or dictionaries, or other models of the grammar). The second stream is the recording stream where we are recording examples of audio from text. The third stream is the modelling stream where people are helping teach computers about how to pronounce the languages given examples of the text and audio. All streams will use our instance of Common Voice. The people in the text stream will upload text to be recorded. The people in the recording stream will log in and record any unrecorded utterances, and the modelling stream will retrieve the audio and text from the website once recording has taken place. It's a single, unified place for keeping track of all of our text and audio, that remains private to our working group.</p>
 
 how-does-it-work-title-v2 = How does Common Voice Indigenous work?
 how-does-it-work-text = We’re crowdsourcing a lorem ipsum dataset of voices. Donate your voice, validate the accuracy of other people’s clips, make the dataset better for everyone. lorem ipsum
@@ -1033,7 +1019,7 @@ download-request-link-single = You can also copy and paste the direct URLs into 
 welcome-staff = Welcome { $company } staff!
 help-contribute = You can help build a diverse, open-source dataset by creating a Common Voice profile and contributing your voice.
 login-company = Log In / Sign Up with { $company } email
-profile-not-required = Having a profile is not required to contribute though it is helpful, see why below.
+profile-not-required = Make sure to sign up before contributing!
 read-more-about = Read more on our About page
 
 
