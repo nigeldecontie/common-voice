@@ -305,7 +305,7 @@ export default [
                 checked={privacyAgreed}
                 onChange={event => setPrivacyAgreed(event.target.checked)}
               />
-              <div className="content">
+              {/* <div className="content">
                 <Localized
                   id="accept-privacy"
                   elems={{
@@ -313,11 +313,11 @@ export default [
                   }}>
                   <span />
                 </Localized>
-              </div>
+              </div> */}
             </label>
-            <Localized id="read-terms-q">
+            {/* <Localized id="read-terms-q">
               <LocaleLink to={URLS.TERMS} className="terms" blank />
-            </Localized>
+            </Localized> */}
           </>
         )}
         <Buttons>

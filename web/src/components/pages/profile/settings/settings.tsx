@@ -131,7 +131,7 @@ function Settings(props: Props) {
                 }
               />
             )}
-            <div className="privacy-and-terms">
+            {/* <div className="privacy-and-terms">
               <InfoIcon />
               <div>
                 <Localized
@@ -146,7 +146,7 @@ function Settings(props: Props) {
                   <LocaleLink to={URLS.TERMS} className="terms" blank />
                 </Localized>
               </div>
-            </div>
+            </div> */}
           </div>
         </Section>
       )}

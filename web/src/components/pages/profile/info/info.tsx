@@ -587,13 +587,13 @@ function ProfilePage({
                 onChange={handleChangeFor('privacyAgreed')}
               />
 
-              <Localized id="read-terms-q">
+              {/* <Localized id="read-terms-q">
                 <LocaleLink
                   to={isEnrolledInChallenge ? URLS.CHALLENGE_TERMS : URLS.TERMS}
                   className="terms"
                   blank
                 />
-              </Localized>
+              </Localized> */}
             </div>
           </div>
 
