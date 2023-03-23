@@ -85,11 +85,11 @@ export default function RegisterSection({
         </div>
         <div className="images-container">
           {marsSrc && <img className="mars" src={marsSrc} alt="Mars" />}
-          <img
+          {/* <img
             className="screenshot"
             src={require(`./images/${isBenefits ? 1 : 2}-${index + 1}.png`)}
             alt=""
-          />
+          /> */}
         </div>
       </div>
     </section>

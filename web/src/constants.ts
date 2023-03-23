@@ -4,12 +4,17 @@ export const DAILY_GOALS = Object.freeze({
 });
 
 export const BENEFITS = [
-  'rich-data',
-  'improve-audio',
-  'keep-track',
-  'compare-progress',
-  'view-goals',
-  'join-newsletter',
+  'email-not-public',
+  'recordings-and-locale-public',
+  'username-optin-public',
+  'demographic-deidentified-clarity-2',
+  'username-email-not-demographic',
+  // 'rich-data',
+  // 'improve-audio',
+  // 'keep-track',
+  // 'compare-progress',
+  // 'view-goals',
+  // 'join-newsletter',
 ];
 
 export const WHATS_PUBLIC = [
