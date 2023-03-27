@@ -40,5 +40,5 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ${{ vars.AWS_REPO }}
-          event-type: cv-deployment-stage
+          event-type: common-voice-deployment-stage
           client-payload: '{"tag": "${{ steps.push-image.outputs.image_tag }}"}'
