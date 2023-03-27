@@ -416,6 +416,43 @@ class ContributionPage extends React.Component<Props, State> {
     );
   }
 
+  renderSampleRateSelector() {
+    const { sampleRate } = this.props;
+    return (
+    <form>
+
+      <div className="form-check">
+        <label>
+          <input
+            type="radio"
+            name="react-tips"
+            value="96000"
+            checked={sampleRate === 96000}
+            onChange={this.handleSampleRateChange}
+            className="form-check-input"
+          />
+          96kHz
+        </label>
+      </div>
+
+      <div className="form-check">
+        <label>
+          <input
+            type="radio"
+            name="react-tips"
+            value="48000"
+            checked={sampleRate === 48000}
+            onChange={this.handleSampleRateChange}
+            className="form-check-input"
+          />
+          48kHz
+        </label>
+      </div>
+
+    </form>
+    )
+  }
+
   renderContent() {
     const {
       activeIndex,
@@ -449,37 +486,7 @@ class ContributionPage extends React.Component<Props, State> {
                   children: <div className="instruction hidden-sm-down" />,
                 }) || <div className="instruction hidden-sm-down" />}
 
-                {/* <form>
-
-                  <div className="form-check">
-                    <label>
-                      <input
-                        type="radio"
-                        name="react-tips"
-                        value="96000"
-                        checked={this.props.sampleRate === 96000}
-                        onChange={this.handleSampleRateChange}
-                        className="form-check-input"
-                      />
-                      96kHz
-                    </label>
-                  </div>
-
-                  <div className="form-check">
-                    <label>
-                      <input
-                        type="radio"
-                        name="react-tips"
-                        value="48000"
-                        checked={this.props.sampleRate === 48000}
-                        onChange={this.handleSampleRateChange}
-                        className="form-check-input"
-                      />
-                      48kHz
-                    </label>
-                  </div>
-
-                </form> */}
+                {false && this.renderSampleRateSelector()}
 
                 <div className="cards">
                   {sentences.map((sentence, i) => {
